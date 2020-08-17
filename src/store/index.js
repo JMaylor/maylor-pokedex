@@ -31,10 +31,11 @@ export default new Vuex.Store({
   actions: {
 	//   asynchronous
 	async searchPokemon(state, query) {
+		
 		const pokeList = await fetch(searchURL);
 		const list = await pokeList.json();
 		const names = list.results.map(x => x.name);
-		const filteredNames = names.filter(name => name.includes(query)).sort();
+		const filteredNames = names.filter(name => name.includes(query.toLowerCase())).sort();
 		state.commit('setPokemonArray', filteredNames);
 	},
 	async getPokemonDetails(state, pokemon) {
