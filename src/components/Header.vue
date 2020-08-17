@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<b-navbar toggleable="lg" type="dark" variant="info">
-			<b-navbar-brand href="#">maylor.io</b-navbar-brand>
+			<b-navbar-brand to="/">maylor.io</b-navbar-brand>
 
 			<b-navbar-nav>
 				<b-form-input
@@ -49,7 +49,6 @@
 				this.$store.commit("setView", "list");
 			},
 			changeToListView() {
-				this.viewType = 'list';
 				this.$store.commit("setView", "list");
 			}
 		}

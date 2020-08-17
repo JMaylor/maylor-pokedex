@@ -12,7 +12,7 @@
 					md="4"
 					lg="3"
 					xl="2">
-						<b-card style="height: 220px">
+						<b-card style="height: 220px" class="my-2">
 							<h5>{{ pokemon.replace(pokemon.charAt(0), pokemon.charAt(0).toUpperCase()) }}</h5>
 							<b-card-img-lazy style="max-height: 80%; max-width: 80%; width: auto; height: auto;" :src="`https://img.pokemondb.net/artwork/${pokemon}.jpg`" :alt="pokemon" />
 						</b-card>
@@ -38,9 +38,7 @@
 		},
 		methods: {
 			selectPokemon(e) {
-				console.log(e.currentTarget.id);
 				this.$store.dispatch("getPokemonDetails", e.currentTarget.id);
-				// this.$store.commit("setView", "single");
 			}
 		}
 	};
