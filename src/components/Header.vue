@@ -11,7 +11,7 @@
 					:value="query"
 					@keypress.enter="searchPokemon"
 				></b-form-input>
-				<b-button v-if="query && viewType === 'single'" size="sm" @click="changeToListView">Results</b-button>
+				<b-button v-if="viewType === 'single'" size="sm" @click="changeToListView">Results</b-button>
 			</b-navbar-nav>
 
 			<b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
