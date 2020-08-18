@@ -1,35 +1,53 @@
 <template>
-	<div>
-		<b-container>
-			<b-row v-if="typeFilter.length > 0"><b-button variant="outline-danger" @click="removeTypeFilter">type: {{ typeFilter }}</b-button></b-row>
+	<div class="pt-4">
+		<b-container class="mt-5">
+			<b-row v-if="typeFilter.length > 0">
+				<b-button variant="outline-danger" @click="removeTypeFilter">type: {{ typeFilter }}</b-button>
+			</b-row>
 			<b-row>
 				<b-col v-for="pokemon in pokemonArray" :key="pokemon.id" cols="12" sm="6" md="4" lg="3" xl="2">
-					<b-card style="height: 220px" class="my-2" :id="pokemon.name" @click="selectPokemon">
-						<h6>
-							<span style="font-size: 16px; font-style: italic; color: #bbb">#{{ pokemon.id }}</span>
-						</h6>
-						<h5>{{ pokemon.name.replace(pokemon.name.charAt(0), pokemon.name.charAt(0).toUpperCase()) }}</h5>
-						<b-card-img-lazy
-							style="max-height: 60%; max-width: 60%; width: auto; height: auto;"
-							:src="`https://img.pokemondb.net/artwork/${pokemon.name}.jpg`"
-							:alt="pokemon.name"
-						/>
-						<br />
+					<b-card
+						no-body
+						class="my-2"
+						style="max-width: 20rem; height: 320px;"
+						:id="pokemon.name"
+						@click="selectPokemon"
+					>
+						<template v-slot:header>
+							{{
+							pokemon.name.replace(
+							pokemon.name.charAt(0),
+							pokemon.name.charAt(0).toUpperCase()
+							)
+							}}
+						</template>
 
-						<div
-							class="icon"
-							v-for="pokemonType in pokemon.types"
-							@click.stop
-							:key="pokemonType"
-							:class="pokemonType"
-							:data-type="pokemonType"
-							@click="updateTypeFilter"
-						>
-							<img
-								:src="`https://duiker101.github.io/pokemon-type-svg-icons/icons/${pokemonType}.svg`"
+						<b-card-body style="height: 130px">
+							<b-card-sub-title class="mb-2">#{{ pokemon.id }}</b-card-sub-title>
+							<b-card-img-lazy
+								style="max-height: 100%; max-width: 100%; height: auto; width: auto; padding: 2px;"
+								:src="`https://img.pokemondb.net/artwork/${pokemon.name}.jpg`"
+							></b-card-img-lazy>
+						</b-card-body>
+
+						<b-card-footer>
+							<div
+								class="icon"
+								v-for="pokemonType in pokemon.types"
+								@click.stop
+								:key="pokemonType"
+								:class="pokemonType"
 								:data-type="pokemonType"
-							/>
-						</div>
+								@click="updateTypeFilter"
+							>
+								<img
+									:src="
+                    `https://duiker101.github.io/pokemon-type-svg-icons/icons/${pokemonType}.svg`
+                  "
+									:data-type="pokemonType"
+								/>
+							</div>
+						</b-card-footer>
 					</b-card>
 				</b-col>
 			</b-row>
@@ -56,7 +74,7 @@
 			},
 			query() {
 				return this.$store.getters.getQuery;
-			},
+			}
 		},
 		methods: {
 			selectPokemon(e) {

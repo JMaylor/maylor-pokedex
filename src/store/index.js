@@ -3,7 +3,7 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
-const searchURL = "https://pokeapi.co/api/v2/pokemon/?limit=721";
+const searchURL = "https://pokeapi.co/api/v2/pokemon/?limit=151";
 const detailsURL = "https://pokeapi.co/api/v2/pokemon/";
 
 export default new Vuex.Store({
@@ -13,13 +13,13 @@ export default new Vuex.Store({
     filteredPokemon: [],
     typeFilter: "",
     query: "",
-    view: "list",
+    view: "list"
   },
   mutations: {
     //   synchronous
 
     setFilteredPokemon(state, query) {
-      state.filteredPokemon = state.pokemonArray.filter((x) =>
+      state.filteredPokemon = state.pokemonArray.filter(x =>
         x.name.includes(query.toLowerCase())
       );
     },
@@ -34,12 +34,12 @@ export default new Vuex.Store({
 
     filterByType(state, query) {
       if (state.typeFilter == "") {
-        state.filteredPokemon = state.pokemonArray.filter((x) =>
+        state.filteredPokemon = state.pokemonArray.filter(x =>
           x.name.includes(query.toLowerCase())
         );
       } else {
         state.filteredPokemon = state.pokemonArray.filter(
-          (x) => x.name.includes(query) && x.types.includes(state.typeFilter)
+          x => x.name.includes(query) && x.types.includes(state.typeFilter)
         );
       }
     },
@@ -55,7 +55,7 @@ export default new Vuex.Store({
     },
     setView(state, view) {
       state.view = view;
-    },
+    }
   },
   actions: {
     //   asynchronous
@@ -66,16 +66,16 @@ export default new Vuex.Store({
       const list = await pokeList.json();
       let pokeArray = [];
 
-      Promise.all(
-        list.results.map((pokemon) =>
-          fetch(detailsURL + pokemon.name).then((response) => response.json())
+      await Promise.all(
+        list.results.map(pokemon =>
+          fetch(detailsURL + pokemon.name).then(response => response.json())
         )
-      ).then((pokemonDetails) => {
-        pokemonDetails.forEach((detailsObj) => {
+      ).then(pokemonDetails => {
+        pokemonDetails.forEach(detailsObj => {
           pokeArray.push({
             id: detailsObj.id,
             name: detailsObj.name,
-            types: detailsObj.types.map((entry) => entry.type.name),
+            types: detailsObj.types.map(entry => entry.type.name)
           });
         });
       });
@@ -85,9 +85,9 @@ export default new Vuex.Store({
 
     async setCurrentPokemon(state, pokemonName) {
       await fetch(detailsURL + pokemonName)
-        .then((response) => response.json())
-        .then((pokemon) => {
-          pokemon.stats.forEach((statistic) => {
+        .then(response => response.json())
+        .then(pokemon => {
+          pokemon.stats.forEach(statistic => {
             switch (statistic.stat.name) {
               case "attack":
                 statistic.variant = "primary";
@@ -112,15 +112,15 @@ export default new Vuex.Store({
           state.commit("setCurrentPokemon", pokemon);
           state.commit("setView", "single");
         });
-    },
+    }
   },
   modules: {},
   getters: {
-    getCurrentPokemon: (state) => state.currentPokemon,
-    getPokemonArray: (state) => state.pokemonArray,
-	 getFilteredPokemon: (state) => state.filteredPokemon,
-	 getTypeFilter: (state) => state.typeFilter,
-    getQuery: (state) => state.query,
-    getView: (state) => state.view,
-  },
+    getCurrentPokemon: state => state.currentPokemon,
+    getPokemonArray: state => state.pokemonArray,
+    getFilteredPokemon: state => state.filteredPokemon,
+    getTypeFilter: state => state.typeFilter,
+    getQuery: state => state.query,
+    getView: state => state.view
+  }
 });
