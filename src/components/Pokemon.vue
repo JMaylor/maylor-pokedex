@@ -9,7 +9,7 @@
 					<b-card
 						no-body
 						class="my-2"
-						style="max-width: 20rem; height: 320px;"
+						style="height: 320px;"
 						:id="pokemon.name"
 						@click="selectPokemon"
 					>
