@@ -20,7 +20,7 @@ export default new Vuex.Store({
 
     setFilteredPokemon(state, query) {
       state.filteredPokemon = state.pokemonArray.filter((x) =>
-        x.name.includes(query)
+        x.name.includes(query.toLowerCase())
       );
     },
 
@@ -35,7 +35,7 @@ export default new Vuex.Store({
     filterByType(state, query) {
       if (state.typeFilter == "") {
         state.filteredPokemon = state.pokemonArray.filter((x) =>
-          x.name.includes(query)
+          x.name.includes(query.toLowerCase())
         );
       } else {
         state.filteredPokemon = state.pokemonArray.filter(
@@ -51,7 +51,7 @@ export default new Vuex.Store({
       state.currentPokemon = pokemon;
     },
     setQuery(state, query) {
-      state.query = query;
+      state.query = query.toLowerCase();
     },
     setView(state, view) {
       state.view = view;
