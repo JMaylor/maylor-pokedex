@@ -45,12 +45,16 @@
 			},
 			searchPokemon(e) {
 				this.updateQuery(e);
-				this.$store.dispatch("searchPokemon", this.query);
+				this.$store.commit("filterByType", this.query);
 				this.$store.commit("setView", "list");
 			},
 			changeToListView() {
 				this.$store.commit("setView", "list");
 			}
+		},
+		created() {
+			this.$store.dispatch("searchPokemon");
+			this.$store.commit("setFilteredPokemon", '');
 		}
 	};
 </script>
